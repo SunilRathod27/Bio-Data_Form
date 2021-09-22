@@ -1,0 +1,283 @@
+<!doctype html>
+<html>
+  <head>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+    </script>
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <form  name="StudentRegistration" onSubmit="return(validate());" id="testform"  method="POST">
+
+        <table cellpadding="2" width="20%" bgcolor="#F9F9F9" align="center" cellspacing="2">
+
+
+            <tr>
+
+                <td colspan=2>
+
+                    <center><h1> Bio - Data</h1></center>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td class='preview'><br>
+
+                    <img src="upload/" id="img" width="100" height="100"><br>
+                </td>
+            </tr>
+            <br>
+            <tr>
+                <td>
+                    <input type="file" id="file" name="file" />
+                    <input type="button" class="button" value="Upload" id="but_upload" style="padding:10px 0 0 0 ">
+                    <br><br>
+                </td>
+            </tr>
+            
+            <tr>
+
+                <td> First Name</td>
+
+                <td><input type=text name=textnames id="textname" size="30"></td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>Last Name</td>
+
+                <td><input type="text" name="lastname" id="lastname" size="30"></td>
+
+            </tr>
+
+
+            
+            <tr>
+
+                <td>Gender</td>
+
+                <td><input type="radio" name="sex" value="male" size="10">Male
+
+                    <input type="radio" name="sex" value="Female" size="10">Female
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>Personal Address</td>
+
+                <td><input type="text" name="personaladdress" id="personaladdress" size="30" ></td>
+
+            </tr>
+            <tr>
+
+                <td>Country</td>
+
+                <td><select name="country" >
+
+                        <option value="-1" selected>select..</option>
+
+                        <option value="India">India</option>
+
+                        <option value="Austraila">Austraila</option>
+
+                        <option value="Pakistan">Pakistan</option>
+
+
+
+                    </select></td>
+
+
+            </tr>
+
+
+            <tr>
+
+                <td>State</td>
+
+                <td><select name="state" >
+
+                        <option value="-1" selected>select..</option>
+
+                        <option value="New Delhi">NEW DELHI</option>
+
+                        <option value="Mumbai">MUMBAI</option>
+
+                        <option value="Goa">Gujarat</option>
+
+                        <option value="Bihar">BIHAR</option>
+
+                    </select></td>
+
+            </tr>
+            <tr>
+
+                <td>City</td>
+
+                <td><select name="city" >
+
+                        <option value="-1" selected>select..</option>
+
+                        <option value="New Delhi">Ahemdabad</option>
+
+                        <option value="Mumbai">Rajkot</option>
+
+                        <option value="Goa">Vadodra</option>
+
+                        <option value="Patna">PATNA</option>
+
+                    </select></td>
+
+            </tr>
+            <tr>
+
+                <td>PinCode</td>
+
+                <td><input type="number" name="pincode" id="pincode" size="6" ></td>
+
+
+            </tr>
+            
+
+            <tr>
+
+                <td>DOB</td>
+
+                <td><input type="date" name="dob" id="dob" size="30" ></td>
+
+            </tr>
+
+            <tr>
+
+                <td>Phone:</td>
+                <td><input type="text"  id="myform_phone" name="phone"  />
+                    <!-- <div id="phone_error" class="error hidden">Please enter a valid phone number</div>
+    </div> -->
+                </td>
+            </tr>
+            <tr>
+
+                <td>EmailId</td>
+
+                <td><input type="email" name="emailid" id="emailid" size="30" ></td>
+
+            </tr>
+
+           
+            <tr>
+
+                <td>Education</td>
+
+                <td><select name="course">
+
+                        <option value="-1" selected>select..</option>
+
+                        <option value="HSC">HSC</option>
+                        <option value="BCA">BCA</option>
+                        <option value="B.Tech">B.TECH</option>
+
+                        <option value="MCA">MCA</option>
+
+                        <option value="MBA">MBA</option>
+
+                        
+
+                    </select></td>
+
+            </tr>
+
+            <tr>
+
+                <td><input type="reset"></td>
+
+                <td colspan="2"><input type="submit" value="Submit Form" id="driver" /></td>
+
+            </tr>
+           
+        </table>
+
+    </form>
+
+    <div id = "stage1" style = "background-color:rgb(120, 32, 221);
+width: 50;" >
+        STAGE
+     </div>
+     <div id="stage2"  style = "background-color:rgb(221, 32, 32);">
+        stage2
+  </div>
+  
+   
+    
+   
+</body>
+
+<script type="text/javascript" src="validate.js"></script>
+<script>
+
+
+    $(document).ready(function () {
+
+        $("#but_upload").click(function () {
+
+            var fd = new FormData();
+
+            var files = $('#file')[0].files;
+
+            // Check file selected or not
+            if (files.length > 0) {
+
+                fd.append('file', files[0]);
+
+                $.ajax({
+                    url: 'upload.php',
+                    type: 'post',
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response != 0) {
+                            $("#img").attr("src", response);
+                            $('.preview img').show();
+                        } else {
+                            alert('File not uploaded');
+                        }
+                    }
+                });
+            } else {
+                alert("Please select a file.");
+            }
+        });
+    });
+
+    
+    
+    $(document).ready(function() {
+			
+            $("#driver").click(function(event){
+				
+               $.post( 
+                  "demo.php",
+                  $("#testform").serialize(),
+						
+                  function(data) {
+                     $('#stage1').html(data);
+                  }
+						
+               );
+					
+               var str = $("#testform").serialize();
+               $("#stage2").text(str);
+            });
+				
+         });
+    
+</script>
+
+
+
+
+</body>
+</html>
